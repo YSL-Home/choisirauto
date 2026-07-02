@@ -8,7 +8,8 @@ Voir [CAHIER_DES_CHARGES_V2.md](./CAHIER_DES_CHARGES_V2.md) pour la vision, le p
 - Next.js 14 (App Router), export statique (`output: "export"`)
 - Tailwind CSS 4
 - Cloudflare Pages (hébergement) + Cloudflare Pages Functions (`functions/api/lead.js`) pour les formulaires
-- Déploiement automatique via GitHub Actions (`.github/workflows/deploy.yml`) + wrangler
+- Déploiement géré directement par l'intégration Git native de Cloudflare Pages (build + déploiement automatique
+  à chaque push sur `main`). GitHub Actions (`.github/workflows/deploy.yml`) sert uniquement à valider le build.
 
 Pas de base de données en V1 : le contenu (véhicules, guides) vit dans `content/*.json`, commité sur Git — même
 logique que les autres projets (`nabdriyadah`, `musclefr`). Une V2 avec CMS/back-office est envisageable une fois
@@ -29,14 +30,17 @@ npm run build   # génère out/
 
 ## Déploiement
 
-Le push sur `main` déclenche `.github/workflows/deploy.yml` qui build puis déploie sur Cloudflare Pages via
-`wrangler pages deploy`. Secrets requis dans le repo GitHub :
+Le projet Cloudflare Pages `choisirauto` est connecté directement au dépôt GitHub via l'intégration Git native de
+Cloudflare (Workers & Pages → Create → Pages → Connect to Git). Chaque push sur `main` déclenche un build et un
+déploiement côté Cloudflare, sans secret ni token à gérer côté GitHub.
 
-| Secret | Description |
+Configuration du projet Cloudflare Pages :
+
+| Paramètre | Valeur |
 |---|---|
-| `CF_API_TOKEN` | Token API Cloudflare avec droits Pages:Edit |
-| `CF_ACCOUNT_ID` | Account ID Cloudflare |
-| `CF_PROJECT_NAME` | Nom du projet Cloudflare Pages (défaut : `choisirauto`) |
+| Build command | `npm run build` |
+| Build output directory | `out` |
+| Root directory | `/` |
 
 Pour la notification des leads par email (optionnel, sinon les leads restent visibles dans les logs Cloudflare
 Functions) : `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `LEAD_FROM_EMAIL` en variables d'environnement du projet

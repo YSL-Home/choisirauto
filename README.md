@@ -38,9 +38,14 @@ Configuration du projet Cloudflare Pages :
 
 | Paramètre | Valeur |
 |---|---|
-| Build command | `npm run build` |
+| Framework preset | Next.js (Static HTML Export) |
+| Build command | `npx next build` |
 | Build output directory | `out` |
 | Root directory | `/` |
+
+Statut : projet Cloudflare Pages connecté au dépôt GitHub (intégration Git native). Chaque push sur `main`
+déclenche automatiquement un build et un déploiement — voir l'onglet *Deployments* du projet dans le dashboard
+Cloudflare pour suivre l'avancement d'un run.
 
 Pour la notification des leads par email (optionnel, sinon les leads restent visibles dans les logs Cloudflare
 Functions) : `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `LEAD_FROM_EMAIL` en variables d'environnement du projet

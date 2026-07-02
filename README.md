@@ -43,9 +43,10 @@ Configuration du projet Cloudflare Pages :
 | Build output directory | `out` |
 | Root directory | `/` |
 
-Statut : projet Cloudflare Pages connecté au dépôt GitHub (intégration Git native). Chaque push sur `main`
-déclenche automatiquement un build et un déploiement — voir l'onglet *Deployments* du projet dans le dashboard
-Cloudflare pour suivre l'avancement d'un run.
+Statut : projet Cloudflare Pages connecté au dépôt GitHub (intégration Git native, reconnectée le 02/07/2026
+après une perte d'autorisation GitHub). Chaque push sur `main` déclenche automatiquement un build et un
+déploiement — voir l'onglet *Deployments* du projet dans le dashboard Cloudflare pour suivre l'avancement d'un run.
+Site en ligne : https://choisirauto.pages.dev
 
 Pour la notification des leads par email (optionnel, sinon les leads restent visibles dans les logs Cloudflare
 Functions) : `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `LEAD_FROM_EMAIL` en variables d'environnement du projet

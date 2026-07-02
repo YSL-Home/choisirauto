@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { guides } from "@/lib/guides";
-import { ScoreIcon, PriceTagIcon, CoinIcon, VerdictIcon, CarIcon } from "@/app/components/icons";
+import { ScoreIcon, PriceTagIcon, CoinIcon, VerdictIcon } from "@/app/components/icons";
 import GuideCard from "@/app/components/GuideCard";
+import CarIllustration from "@/app/components/CarIllustration";
 
 export default function HomePage() {
   const derniersGuides = guides.slice(0, 3);
@@ -9,48 +10,60 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="mx-auto max-w-6xl px-5 pb-16 pt-14 text-center md:pt-20">
-        <p className="mx-auto mb-4 inline-block rounded-full bg-accent/10 px-4 py-1 text-sm font-semibold text-accent">
-          La plateforme de décision automobile au Maroc
-        </p>
-        <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight text-ink md:text-5xl">
-          La bonne voiture, au bon prix, avec le bon budget.
-        </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-lg text-ink/60">
-          Ce site ne se contente pas d'informer : il vous aide à décider. Score Auto, prix juste, coût réel et
-          verdict clair — pour les particuliers comme pour les entreprises.
-        </p>
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/10 via-paper to-good/10" />
+        <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 top-10 h-64 w-64 rounded-full bg-good/20 blur-3xl" />
 
-        <div className="mx-auto mt-10 grid max-w-3xl gap-5 sm:grid-cols-2">
-          <Link
-            href="/particuliers"
-            className="group rounded-2xl border border-black/10 bg-white p-7 text-left shadow-sm transition hover:border-accent hover:shadow-md"
-          >
-            <div className="flex h-12 w-16 items-center justify-center rounded-lg bg-accent/10 text-accent">
-              <CarIcon segment="citadine" className="h-7 w-11" />
-            </div>
-            <div className="mt-4 text-sm font-semibold text-accent">Particuliers</div>
-            <div className="mt-1 text-xl font-bold text-ink">Je veux acheter une voiture</div>
-            <p className="mt-2 text-sm text-ink/60">
-              Assistant de choix, coût réel, guides "acheter ou éviter ?"
-            </p>
-            <div className="mt-4 text-sm font-semibold text-accent group-hover:underline">Commencer →</div>
-          </Link>
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-14 text-center md:pt-20">
+          <p className="mx-auto mb-4 inline-block rounded-full bg-accent/10 px-4 py-1 text-sm font-semibold text-accent">
+            La plateforme de décision automobile au Maroc
+          </p>
+          <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight text-ink md:text-5xl">
+            La bonne voiture, au bon prix, avec le bon budget.
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-lg text-ink/60">
+            Ce site ne se contente pas d'informer : il vous aide à décider. Score Auto, prix juste, coût réel et
+            verdict clair — pour les particuliers comme pour les entreprises.
+          </p>
 
-          <Link
-            href="/entreprises"
-            className="group rounded-2xl border border-black/10 bg-white p-7 text-left shadow-sm transition hover:border-accent hover:shadow-md"
-          >
-            <div className="flex h-12 w-16 items-center justify-center rounded-lg bg-accent/10 text-accent">
-              <CarIcon segment="SUV familial" className="h-8 w-11" />
-            </div>
-            <div className="mt-4 text-sm font-semibold text-accent">Entreprises</div>
-            <div className="mt-1 text-xl font-bold text-ink">Je gère une flotte ou des achats</div>
-            <p className="mt-2 text-sm text-ink/60">
-              Coût flotte, achat vs crédit vs LLD, audit et devis.
-            </p>
-            <div className="mt-4 text-sm font-semibold text-accent group-hover:underline">Commencer →</div>
-          </Link>
+          <div className="mx-auto mt-10 flex max-w-2xl items-end justify-center gap-4 sm:gap-6">
+            <div className="w-20 opacity-70 sm:w-24"><CarIllustration segment="citadine" /></div>
+            <div className="w-28 sm:w-32"><CarIllustration segment="SUV" /></div>
+            <div className="w-20 opacity-70 sm:w-24"><CarIllustration segment="berline" /></div>
+          </div>
+
+          <div className="mx-auto mt-10 grid max-w-3xl gap-5 sm:grid-cols-2">
+            <Link
+              href="/particuliers"
+              className="group rounded-2xl border border-black/10 bg-white p-7 text-left shadow-sm transition hover:-translate-y-1 hover:border-accent hover:shadow-lg"
+            >
+              <div className="flex h-16 w-20 items-center justify-center rounded-xl bg-accent/10">
+                <CarIllustration segment="citadine" className="h-12 w-16" />
+              </div>
+              <div className="mt-4 text-sm font-semibold text-accent">Particuliers</div>
+              <div className="mt-1 text-xl font-bold text-ink">Je veux acheter une voiture</div>
+              <p className="mt-2 text-sm text-ink/60">
+                Assistant de choix, coût réel, guides "acheter ou éviter ?"
+              </p>
+              <div className="mt-4 text-sm font-semibold text-accent group-hover:underline">Commencer →</div>
+            </Link>
+
+            <Link
+              href="/entreprises"
+              className="group rounded-2xl border border-black/10 bg-white p-7 text-left shadow-sm transition hover:-translate-y-1 hover:border-accent hover:shadow-lg"
+            >
+              <div className="flex h-16 w-20 items-center justify-center rounded-xl bg-warn/10">
+                <CarIllustration segment="SUV familial" className="h-12 w-16" />
+              </div>
+              <div className="mt-4 text-sm font-semibold text-accent">Entreprises</div>
+              <div className="mt-1 text-xl font-bold text-ink">Je gère une flotte ou des achats</div>
+              <p className="mt-2 text-sm text-ink/60">
+                Coût flotte, achat vs crédit vs LLD, audit et devis.
+              </p>
+              <div className="mt-4 text-sm font-semibold text-accent group-hover:underline">Commencer →</div>
+            </Link>
+          </div>
         </div>
       </section>
 

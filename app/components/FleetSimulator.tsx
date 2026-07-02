@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { computeFleetCost } from "@/lib/fleet";
 import { formatNumber } from "@/lib/format";
-import { CoinIcon, CarIcon, ScoreIcon } from "./icons";
+import { CoinIcon, ScoreIcon } from "./icons";
+import CarIllustration from "./CarIllustration";
 
 const SEGMENTS = ["citadine", "berline", "SUV", "SUV familial", "utilitaire"];
 
@@ -44,11 +45,12 @@ export default function FleetSimulator() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-black/10 bg-white p-6">
+      <div className="overflow-hidden rounded-2xl border border-black/10 bg-white">
+        <div className="flex h-24 items-center justify-center bg-gradient-to-br from-paper to-accent/10">
+          <CarIllustration segment={segment} className="h-16 w-28" />
+        </div>
+        <div className="p-6">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/10 text-accent">
-            <CarIcon segment={segment} className="h-7 w-10" />
-          </div>
           <div>
             <div className="text-sm font-semibold text-ink/60">Coût total mensuel de la flotte</div>
             <div className="text-3xl font-extrabold text-accent">
@@ -78,6 +80,7 @@ export default function FleetSimulator() {
         <p className="mt-6 text-xs text-ink/40">
           Estimation indicative incluant amortissement, carburant, entretien, assurance et pneus. Ne constitue pas une offre.
         </p>
+        </div>
       </div>
     </div>
   );

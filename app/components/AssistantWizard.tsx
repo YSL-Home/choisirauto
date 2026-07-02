@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { vehicles, computeScore, verdictFromScore, VERDICT_LABEL, VehicleScores, Vehicle } from "@/lib/vehicles";
+import { formatNumber } from "@/lib/format";
 import VerdictBadge from "./VerdictBadge";
 import ScoreBadge from "./ScoreBadge";
+import { CarIcon } from "./icons";
 
 type Answers = {
   budget: number;
@@ -105,14 +107,19 @@ export default function AssistantWizard() {
         <div className="grid gap-5 md:grid-cols-3">
           {cards.filter((c) => c.item).map((c) => (
             <div key={c.label} className="rounded-2xl border border-black/10 bg-white p-5">
-              <div className="text-xs font-semibold uppercase tracking-wide text-accent">{c.label}</div>
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-semibold uppercase tracking-wide text-accent">{c.label}</div>
+                <div className="flex h-9 w-12 items-center justify-center rounded-lg bg-paper text-ink/50">
+                  <CarIcon segment={c.item!.vehicle.segment} className="h-6 w-9" />
+                </div>
+              </div>
               <div className="mt-2 flex items-center justify-between">
                 <div className="text-lg font-bold text-ink">
                   {c.item!.vehicle.marque} {c.item!.vehicle.modele}
                 </div>
                 <ScoreBadge score={c.item!.score} />
               </div>
-              <div className="mt-1 text-sm text-ink/60">{c.item!.vehicle.prixDH.toLocaleString("fr-FR")} DH</div>
+              <div className="mt-1 text-sm text-ink/60">{formatNumber(c.item!.vehicle.prixDH)} DH</div>
               <div className="mt-3"><VerdictBadge verdict={verdictFromScore(c.item!.score)} /></div>
               <p className="mt-3 text-sm text-ink/70">{c.item!.vehicle.resume}</p>
               <Link href={`/guides?vehicule=${c.item!.vehicle.slug}`} className="mt-3 inline-block text-sm font-semibold text-accent hover:underline">
@@ -163,7 +170,7 @@ export default function AssistantWizard() {
             onChange={(e) => setAnswers({ ...answers, budget: Number(e.target.value) })}
             className="mt-6 w-full"
           />
-          <div className="mt-2 text-2xl font-bold text-accent">{answers.budget.toLocaleString("fr-FR")} DH</div>
+          <div className="mt-2 text-2xl font-bold text-accent">{formatNumber(answers.budget)} DH</div>
         </div>
       )}
 
@@ -223,7 +230,7 @@ export default function AssistantWizard() {
             onChange={(e) => setAnswers({ ...answers, kmAnnuel: Number(e.target.value) })}
             className="mt-6 w-full"
           />
-          <div className="mt-2 text-2xl font-bold text-accent">{answers.kmAnnuel.toLocaleString("fr-FR")} km/an</div>
+          <div className="mt-2 text-2xl font-bold text-accent">{formatNumber(answers.kmAnnuel)} km/an</div>
         </div>
       )}
 

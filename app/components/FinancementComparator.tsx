@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { computeComparatif, FinancementMode } from "@/lib/fleet";
+import { formatNumber } from "@/lib/format";
 
 const LABELS: Record<FinancementMode, string> = { achat: "Achat", credit: "Crédit", lld: "LLD" };
 
@@ -35,7 +36,7 @@ export default function FinancementComparator() {
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/70">Kilométrage annuel estimé</label>
           <input type="range" min={5000} max={60000} step={1000} value={kmAnnuel} onChange={(e) => setKmAnnuel(Number(e.target.value))} className="w-full" />
-          <div className="text-sm text-ink/60">{kmAnnuel.toLocaleString("fr-FR")} km/an</div>
+          <div className="text-sm text-ink/60">{formatNumber(kmAnnuel)} km/an</div>
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/70">Trésorerie disponible</label>
@@ -56,15 +57,31 @@ export default function FinancementComparator() {
       <div className="rounded-2xl border border-black/10 bg-white p-6">
         <div className="text-sm font-semibold text-ink/60">Coût mensuel estimé par mode</div>
         <div className="mt-4 space-y-3">
-          {rows.map((r) => (
-            <div
-              key={r.mode}
-              className={`flex items-center justify-between rounded-lg border px-4 py-3 ${r.mode === result.recommandation ? "border-accent bg-accent/5" : "border-black/10"}`}
-            >
-              <span className="font-medium text-ink">{LABELS[r.mode]}</span>
-              <span className="font-bold text-ink">{Math.round(r.value).toLocaleString("fr-FR")} DH/mois</span>
-            </div>
-          ))}
+          {rows.map((r) => {
+            const max = Math.max(...rows.map((x) => x.value), 1);
+            return (
+              <div
+                key={r.mode}
+                className={`rounded-lg border px-4 py-3 ${r.mode === result.recommandation ? "border-accent bg-accent/5" : "border-black/10"}`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-ink">
+                    {LABELS[r.mode]}
+                    {r.mode === result.recommandation && (
+                      <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold uppercase text-white">Recommandé</span>
+                    )}
+                  </span>
+                  <span className="font-bold text-ink">{formatNumber(Math.round(r.value))} DH/mois</span>
+                </div>
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-black/5">
+                  <div
+                    className={`h-full rounded-full ${r.mode === result.recommandation ? "bg-accent" : "bg-ink/20"}`}
+                    style={{ width: `${Math.max((r.value / max) * 100, 3)}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-6 rounded-lg bg-accent/10 p-4">

@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
-import { guides, TYPE_LABEL } from "@/lib/guides";
+import { guides } from "@/lib/guides";
+import GuideCard from "@/app/components/GuideCard";
 
 export const metadata: Metadata = {
   title: "Guides — Acheter ou éviter ?",
@@ -18,11 +18,7 @@ export default function GuidesPage() {
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {guides.map((g) => (
-          <Link key={g.slug} href={`/guides/${g.slug}`} className="rounded-xl border border-black/10 bg-white p-5 transition hover:border-accent hover:shadow-md">
-            <div className="text-xs font-semibold uppercase tracking-wide text-accent">{TYPE_LABEL[g.type]}</div>
-            <div className="mt-1 font-bold text-ink">{g.titre}</div>
-            <p className="mt-2 text-sm text-ink/60">{g.chapo}</p>
-          </Link>
+          <GuideCard key={g.slug} guide={g} />
         ))}
       </div>
     </div>

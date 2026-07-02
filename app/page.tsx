@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { guides } from "@/lib/guides";
+import { ScoreIcon, PriceTagIcon, CoinIcon, VerdictIcon, CarIcon } from "@/app/components/icons";
+import GuideCard from "@/app/components/GuideCard";
 
 export default function HomePage() {
   const derniersGuides = guides.slice(0, 3);
@@ -24,7 +26,10 @@ export default function HomePage() {
             href="/particuliers"
             className="group rounded-2xl border border-black/10 bg-white p-7 text-left shadow-sm transition hover:border-accent hover:shadow-md"
           >
-            <div className="text-sm font-semibold text-accent">Particuliers</div>
+            <div className="flex h-12 w-16 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <CarIcon segment="citadine" className="h-7 w-11" />
+            </div>
+            <div className="mt-4 text-sm font-semibold text-accent">Particuliers</div>
             <div className="mt-1 text-xl font-bold text-ink">Je veux acheter une voiture</div>
             <p className="mt-2 text-sm text-ink/60">
               Assistant de choix, coût réel, guides "acheter ou éviter ?"
@@ -36,7 +41,10 @@ export default function HomePage() {
             href="/entreprises"
             className="group rounded-2xl border border-black/10 bg-white p-7 text-left shadow-sm transition hover:border-accent hover:shadow-md"
           >
-            <div className="text-sm font-semibold text-accent">Entreprises</div>
+            <div className="flex h-12 w-16 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <CarIcon segment="SUV familial" className="h-8 w-11" />
+            </div>
+            <div className="mt-4 text-sm font-semibold text-accent">Entreprises</div>
             <div className="mt-1 text-xl font-bold text-ink">Je gère une flotte ou des achats</div>
             <p className="mt-2 text-sm text-ink/60">
               Coût flotte, achat vs crédit vs LLD, audit et devis.
@@ -52,12 +60,15 @@ export default function HomePage() {
           <h2 className="text-center text-2xl font-bold text-ink">Ce qui nous différencie</h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { titre: "Score Auto", desc: "Une note claire pour comparer prix, coût, revente, entretien et risque." },
-              { titre: "Prix juste", desc: "Bonne affaire, prix correct, à négocier ou trop cher : en un coup d'œil." },
-              { titre: "Coût réel", desc: "Le vrai coût mensuel, crédit, carburant, assurance et entretien inclus." },
-              { titre: "Verdict", desc: "Acheter, négocier, vérifier ou éviter — une conclusion, pas juste des chiffres." },
+              { titre: "Score Auto", desc: "Une note claire pour comparer prix, coût, revente, entretien et risque.", Icon: ScoreIcon, color: "text-accent", bg: "bg-accent/10" },
+              { titre: "Prix juste", desc: "Bonne affaire, prix correct, à négocier ou trop cher : en un coup d'œil.", Icon: PriceTagIcon, color: "text-good", bg: "bg-good/10" },
+              { titre: "Coût réel", desc: "Le vrai coût mensuel, crédit, carburant, assurance et entretien inclus.", Icon: CoinIcon, color: "text-warn", bg: "bg-warn/10" },
+              { titre: "Verdict", desc: "Acheter, négocier, vérifier ou éviter — une conclusion, pas juste des chiffres.", Icon: VerdictIcon, color: "text-bad", bg: "bg-bad/10" },
             ].map((item) => (
               <div key={item.titre} className="rounded-xl bg-paper p-5">
+                <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-full ${item.bg} ${item.color}`}>
+                  <item.Icon className="h-6 w-6" />
+                </div>
                 <div className="font-bold text-ink">{item.titre}</div>
                 <p className="mt-1 text-sm text-ink/60">{item.desc}</p>
               </div>
@@ -76,15 +87,7 @@ export default function HomePage() {
         </div>
         <div className="grid gap-5 sm:grid-cols-3">
           {derniersGuides.map((g) => (
-            <Link
-              key={g.slug}
-              href={`/guides/${g.slug}`}
-              className="rounded-xl border border-black/10 bg-white p-5 transition hover:border-accent hover:shadow-md"
-            >
-              <div className="text-xs font-semibold uppercase tracking-wide text-accent">{g.type}</div>
-              <div className="mt-1 font-bold text-ink">{g.titre}</div>
-              <p className="mt-2 text-sm text-ink/60">{g.chapo}</p>
-            </Link>
+            <GuideCard key={g.slug} guide={g} />
           ))}
         </div>
       </section>

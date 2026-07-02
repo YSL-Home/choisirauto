@@ -2,6 +2,15 @@
 
 @source "../app/**/*.{tsx,ts,jsx,js}";
 
+@theme {
+  --color-ink: #0d1526;
+  --color-paper: #f5f7fa;
+  --color-accent: #1a56db;
+  --color-good: #0f9d58;
+  --color-warn: #d97706;
+  --color-bad: #dc2626;
+}
+
 html {
   scroll-behavior: smooth;
 }

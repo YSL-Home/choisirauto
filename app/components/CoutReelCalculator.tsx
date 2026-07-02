@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { computeCoutReel } from "@/lib/cost";
+import { formatNumber } from "@/lib/format";
+import CostBarChart from "./CostBarChart";
+import { CoinIcon } from "./icons";
 
 const SEGMENTS = ["citadine", "berline", "SUV", "SUV familial"];
 const MOTORISATIONS = ["essence", "diesel", "hybride", "electrique"] as const;
@@ -65,7 +68,7 @@ export default function CoutReelCalculator() {
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/70">Kilométrage annuel</label>
           <input type="range" min={5000} max={40000} step={1000} value={kmAnnuel} onChange={(e) => setKmAnnuel(Number(e.target.value))} className="w-full" />
-          <div className="text-sm text-ink/60">{kmAnnuel.toLocaleString("fr-FR")} km/an</div>
+          <div className="text-sm text-ink/60">{formatNumber(kmAnnuel)} km/an</div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -81,18 +84,20 @@ export default function CoutReelCalculator() {
       </div>
 
       <div className="rounded-2xl border border-black/10 bg-white p-6">
-        <div className="text-sm font-semibold text-ink/60">Coût mensuel réel estimé</div>
-        <div className="mt-1 text-4xl font-extrabold text-accent">
-          {Math.round(detail.total).toLocaleString("fr-FR")} DH<span className="text-lg font-medium text-ink/40">/mois</span>
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/10 text-accent">
+            <CoinIcon className="h-6 w-6" />
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-ink/60">Coût mensuel réel estimé</div>
+            <div className="text-3xl font-extrabold text-accent">
+              {formatNumber(detail.total)} DH<span className="text-base font-medium text-ink/40">/mois</span>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-6 space-y-2">
-          {postes.map((p) => (
-            <div key={p.label} className="flex items-center justify-between text-sm">
-              <span className="text-ink/60">{p.label}</span>
-              <span className="font-medium text-ink">{Math.round(p.value).toLocaleString("fr-FR")} DH</span>
-            </div>
-          ))}
+        <div className="mt-6">
+          <CostBarChart items={postes} />
         </div>
 
         <p className="mt-6 text-xs text-ink/40">
